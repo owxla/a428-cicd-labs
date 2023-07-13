@@ -12,9 +12,17 @@
                 }
             }
             stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
+                steps {
+                    sh './jenkins/scripts/test.sh'
+                }
             }
-        }
+            stage('Deliver') {
+                steps {
+                    sh './jenkins/scripts/deliver.sh'
+                    input message: 'Lanjutkan ke tahap Deploy? (Click "Proceed" to continue)'
+                    sh './jenkins/scripts/kill.sh'
+                    sh 'sleep 60'
+                }
+             }
         }
     }
